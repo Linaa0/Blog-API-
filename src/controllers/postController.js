@@ -5,7 +5,7 @@ exports.createPost =async(req, res)=>{
         const post= await Post.create({
             title: req.body.title,
             content: req.body.content,
-            user: req.user.id
+            author: req.user.id
         });
         res.status(201).json(post);
     }catch(err){
@@ -14,7 +14,7 @@ exports.createPost =async(req, res)=>{
 };
 
 exports.getPosts= async(req,res)=>{
-    const posts= await Post.find().populate("user", "name");
+    const posts= await Post.find().populate("author", "name");
     res.json(posts);
 };
 

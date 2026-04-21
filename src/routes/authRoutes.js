@@ -14,6 +14,6 @@ const {
 router.post('/register', registerValidation, validate, register);
 
 // LOGIN
-router.post('/login',registerValidation, validate, login);
+router.post('/login',loginValidation, validate, login);
 
 module.exports = router;

@@ -30,10 +30,18 @@ async function loadPosts() {
         table.innerHTML = "";
 
         posts.forEach(post => {
+            const createdTime= new Date(post.createdAt).toLocaleString([],{
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+            const description= `Created by ${post.user?.name || "Unknown"} at ${createdTime}`
             table.innerHTML += `
                 <tr>
                     <td>${post.title}</td>
-                    <td>${post.description || "No description"}</td>
+                    <td>${description}</td>
                     <td>
                         <button onclick="deletePost('${post._id}')">Delete</button>
                     </td>
