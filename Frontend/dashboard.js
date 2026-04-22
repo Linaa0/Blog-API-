@@ -16,7 +16,8 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 // Load posts
 async function loadPosts() {
     try {
-        const res = await fetch(`${API}/posts`, {
+        const search= document.getElementById("searchInput").value;
+        const res = await fetch(`${API}/posts?search=${search}`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -31,8 +32,9 @@ async function loadPosts() {
 
         posts.forEach(post => {
             const createdTime= new Date(post.createdAt).toLocaleString([],{
+                weekday: "long",
                 year: "numeric",
-                month: "2-digit",
+                month: "long",
                 day: "2-digit",
                 hour: "2-digit",
                 minute: "2-digit"

@@ -15,6 +15,13 @@
     <div>
       <button onclick="logout()" class="secondary">Logout</button>
       <button onclick="deleteAccount()">Delete Account</button>
+      <input 
+  type="text"
+  id="searchInput"
+  placeholder="Search posts..."
+  onkeyup="loadPosts()"
+  style="padding:10px; width:300px; margin-bottom:20px;"
+/>
     </div>
   </div>
 

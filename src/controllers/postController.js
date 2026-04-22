@@ -14,8 +14,23 @@ exports.createPost =async(req, res)=>{
 };
 
 exports.getPosts= async(req,res)=>{
-    const posts= await Post.find().populate("author", "name");
-    res.json(posts);
+    try{
+        const search= req.query.search || "";
+        const posts= await Post.find({
+            $or:[
+            { title:{
+                $regex: search,
+                $options: "i"
+            }},
+            {content: {$regex: search, $options:"i"}}
+            ]
+         
+        }).populate("author", "name");
+        res.json(posts);
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+    
 };
 
 exports.getPostById= async (req,res)=> {

@@ -99,7 +99,15 @@ async function createPost() {
 
 // LOAD POSTS
 async function loadPosts(isAdmin = false) {
-  const res = await fetch(`${API}/posts`);
+  const token= localStorage.getItem("token");
+
+  const searchInput= document.getElementById("searchInput");
+  const search= searchInput? searchInput.value : "";
+  const res = await fetch(`${API}/posts?search=${search}`,{
+    headers: {
+      "Authorization": "Bearer" +token
+    }
+  });
   const posts = await res.json();
 
   const container = document.getElementById("posts");
@@ -110,7 +118,7 @@ async function loadPosts(isAdmin = false) {
       <div class="post">
         <strong>${post.title}</strong>
         <p>${post.content}</p>
-        <small>Created by ${post.user?.name || "Unknown"}</small>
+        <small>Created by ${post.author?.name || "Unknown"}</small>
 
         <button onclick="deletePost('${post._id}')">Delete</button>
         ${isAdmin ? `<button onclick="updatePost('${post._id}')">Edit</button>` : ""}
@@ -153,6 +161,7 @@ function parseJwt(token) {
  
 }
 
+const token= localStorage.getItem("token");
 const user= parseJwt(token);
 
 if(user && user.role=== "admin"){
